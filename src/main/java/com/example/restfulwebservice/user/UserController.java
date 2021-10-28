@@ -4,8 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
-import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody User user){
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user){
         User saveUser = service.save(user);
 
         // 서버에서 결과에 따른 상태값(200) 이 아닌 상태코드 created가 출력되어야 올바른 REST API를 설계하는 방법임)

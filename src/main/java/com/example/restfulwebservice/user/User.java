@@ -1,5 +1,8 @@
 package com.example.restfulwebservice.user;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,6 +14,8 @@ import java.util.Date;
 
 @Data
 @AllArgsConstructor
+//@JsonIgnoreProperties(value = { "passwd"})  // 지정된 필드를 화면에 출력하지 못하게 해줌
+@JsonFilter("UserInfo")                     //
 public class User {
 
     private Integer id;
@@ -19,5 +24,8 @@ public class User {
     private String name;
     @Past
     private Date joinDate;
+
+    private String passwd;
+    private String ssn;
 
 }

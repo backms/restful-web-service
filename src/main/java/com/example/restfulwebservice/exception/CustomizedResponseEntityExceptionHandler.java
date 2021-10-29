@@ -17,7 +17,8 @@ import java.util.Date;
 @ControllerAdvice // 모든 컨트롤러가 실행될때 해당 어노테이션이 선언된 컨트롤러를 인식함.
 public class CustomizedResponseEntityExceptionHandler<ReponseEntity> extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
+    // 에러가 발생하면 JSON 데이터로 date, message, details를 출력하도록 함.
+    @ExceptionHandler(Exception.class)      // 모든 exception에 대해 해당 메소드를 실행한다.
     public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request){
         ExceptionResponse exceptionResponse =
                 new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription((false)));
@@ -26,7 +27,7 @@ public class CustomizedResponseEntityExceptionHandler<ReponseEntity> extends Res
     }
 
     //사용자가 존재하지 않았을때의 예외처리 생성
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler(UserNotFoundException.class)  // UserNotFoundException 에러가 발생했을 때 이 메소드를 실행한다.
     public final ResponseEntity<Object> handleUserNotExceptions(Exception ex, WebRequest request){
         ExceptionResponse exceptionResponse =
                 new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription((false)));
@@ -34,6 +35,7 @@ public class CustomizedResponseEntityExceptionHandler<ReponseEntity> extends Res
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
+    // 유효성 에러 발생 시 해당 메소드를 실행
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,

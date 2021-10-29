@@ -3,6 +3,7 @@ package com.example.restfulwebservice.user;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;

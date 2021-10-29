@@ -1,7 +1,12 @@
 
 server:
-  port: 8088
+  port: 80
 
 logging:
   level:
     org.springframework: DEBUG
+
+# 다국어 설정을 위한 설정값을 yml에 설정값으로 추가
+spring:
+  messages:
+    basename: messages

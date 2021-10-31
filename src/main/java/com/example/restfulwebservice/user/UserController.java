@@ -1,5 +1,8 @@
 package com.example.restfulwebservice.user;
 
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.ControllerLinkRelationProvider;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -7,6 +10,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class UserController {
@@ -23,7 +29,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public User retriveUser(@PathVariable int id){
+    public EntityModel<User> retriveUser(@PathVariable int id){
         User user = service.findOne(id);
 
         // DB에 없는 사용자를 조회 시, 서버의 프로그램상에는 문제가 없으므로 200 ok를 반환한다.
@@ -33,7 +39,15 @@ public class UserController {
             throw new UserNotFoundException(String.format("Id[%s] not Found", id));
         }
 
-        return user;
+        // HATEOAS
+        EntityModel model = EntityModel.of(user);
+
+        WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retriveAllUser());  // retriveAllUser와 "all-users"를 연결
+        // postman의 결과에 _links - all-users - href 에 all-users의 풀 uri가 출력
+        // hateoas 를 사용하면 하나의 작업에 대해 파생된 추가적인 작업들을 실행할 수 있음.
+        model.add(linkTo.withRel("all-users"));
+
+        return model;
     }
 
     @PostMapping("/users")

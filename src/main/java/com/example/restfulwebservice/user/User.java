@@ -17,7 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 //@JsonIgnoreProperties(value = { "passwd"})  // 지정된 필드를 화면에 출력하지 못하게 해줌
 @NoArgsConstructor      // 디폴트 생성자
-@JsonFilter("UserInfo")
+//@JsonFilter("UserInfo")
 public class User {
 
     private Integer id;

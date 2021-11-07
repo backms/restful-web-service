@@ -8,15 +8,19 @@ logging:
 
 # 다국어 설정을 위한 설정값을 yml에 설정값으로 추가
 spring:
+  jpa:
+    show-sql: true
   messages:
     basename: messages
-  security:
-    user:
-      name: username
-      password: passw0rd
+#  security:
+#    user:
+#      name: username
+#      password: passw0rd
 
 management:
   endpoint:
     web:
       exposure:
         incldue: "*"
+
+
